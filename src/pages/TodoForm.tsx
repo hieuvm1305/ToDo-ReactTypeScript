@@ -38,7 +38,7 @@ const TodoForm: React.FC = () => {
   };
 
   return (
-    <div className="border border-red-300 rounded-md">
+    <div className="border border-red-300 rounded-md mb-5">
       <div className="my-4">
         <form onSubmit={formik.handleSubmit} onReset={formik.handleReset} >
           <div className="grid grid-cols-1 md:grid-cols-2">

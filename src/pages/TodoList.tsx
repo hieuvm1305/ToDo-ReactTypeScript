@@ -4,25 +4,20 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import { loadingPage, selectLoading } from "../redux/loadingSlice";
+import { selectSearchList, loadingList, selectTodoList } from "../redux/todoSlice";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import EditTodoModal from "./EditTodoModal";
 
-interface Props {
-  search: object;
-}
-// interface editItem {
-//   name: string;
-//   status: string;
-//   id: string;
-// }
-
-function TodoList({ search }: Props) {
+function TodoList() {
   const [todoList, setTodoList] = useState([]);
   const isLoading = useSelector(selectLoading);
   const [perPage, setperPage] = useState(5);
   const dispatch = useDispatch();
+  const searchList = useSelector(selectSearchList);
+  const listTodo = useSelector(selectTodoList);
+
   const [editTask, seteditTask] = useState({
     id: '0',
     name: '',
@@ -34,7 +29,7 @@ function TodoList({ search }: Props) {
       try {
         const response = await getTodoList();
         if (response) {
-          setTodoList(response.data);
+          dispatch(loadingList(response.data))
         }
       } catch (error) {
         console.error(error);
@@ -42,15 +37,18 @@ function TodoList({ search }: Props) {
     };
     getList();
     return () => {};
-  }, [isLoading]);
-
-  // useEffect(()=>{
-  //   if(search){
-  //     const arr = [...resultList];
-
-  //   }
-  // }, [search, todoList])
-
+  }, [dispatch, isLoading]);
+  
+  useEffect(() => {
+    if(searchList.length){
+      setTodoList(searchList);
+    } else {
+      setTodoList(listTodo);
+    }
+    return () => {
+    }
+  }, [listTodo, searchList])
+  
   const handleDeleteTodo = async (id: string) => {
     if (window.confirm("Bạn có muốn xóa")) {
       try {
@@ -74,7 +72,7 @@ function TodoList({ search }: Props) {
     {
       field: "name",
       headerName: "Name",
-      width: 250,
+      width: 300,
     },
     {
       field: "status",
@@ -110,9 +108,7 @@ function TodoList({ search }: Props) {
       ),
     },
   ];
-  // const handleSearchInfo = () => {
-  //   console.log(search);
-  // };
+
   return (
     <div>
       <div className="h-[380px] w-full">
