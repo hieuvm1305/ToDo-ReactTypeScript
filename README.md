@@ -5,6 +5,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+package using in project: 
+-axios
+-Material UI
+-Formik + yup
+-taildwindCss
 
 ### `yarn start`
 
