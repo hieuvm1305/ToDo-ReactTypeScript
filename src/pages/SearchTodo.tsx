@@ -15,7 +15,7 @@ function SearchTodo() {
         item.name.toLowerCase().includes(searchName.toLowerCase())
       );
     }
-    if(searchStatus){
+    if (searchStatus) {
       result = result.filter((item) =>
         item.status.toLowerCase().includes(searchStatus.toLowerCase())
       );
@@ -27,7 +27,7 @@ function SearchTodo() {
     setSearchName("");
     setSearchStatus("");
     dispatch(loadingSearchList([]));
-  }
+  };
   return (
     <div className="mt-5">
       <div className="flex flex-col md:flex-row gap-2 px-auto">
@@ -57,15 +57,22 @@ function SearchTodo() {
             }}
           />
         </div>
-        <div className="w-[10%]">
-          <Button color="primary" variant="contained" onClick={filterSearch}>
-            Search
-          </Button>
-        </div>
-        <div className="w-[10%]">
-          <Button color="secondary" variant="contained" onClick={cancelSearch}>
-            Cancel
-          </Button>
+        <div className="w-2/5 flex flex-row gap-5 sm:gap-1">
+          <div className="sm:w-2/5">
+            <Button fullWidth color="primary" variant="contained" onClick={filterSearch}>
+              Search
+            </Button>
+          </div>
+          <div className="sm:w-2/5">
+            <Button
+            fullWidth
+              color="secondary"
+              variant="contained"
+              onClick={cancelSearch}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
     </div>

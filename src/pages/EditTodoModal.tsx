@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { editTodo } from "../service";
 import { loadingPage } from "../redux/loadingSlice";
+import { loadingSearchList } from "../redux/todoSlice";
 import { useDispatch } from "react-redux";
 
 interface Todo {
@@ -34,8 +35,8 @@ const EditTodoModal = ({ editItem, isOpen, hide }: Todo) => {
   const [name, setname] = useState("");
   const [status, setstatus] = useState("");
   const dispatch = useDispatch();
-  
-  // // yup 
+
+  // // yup
   // const validationSchema = yup.object({
   //   name: yup.string().required("Todo is required!"),
   //   status: yup.string().required("Desc is required!"),
@@ -60,11 +61,12 @@ const EditTodoModal = ({ editItem, isOpen, hide }: Todo) => {
 
   const handleSubmit = async () => {
     try {
-      let data : object = {name : name, status: status};
-      const res = await editTodo(editItem.id, data );
+      let data: object = { name: name, status: status };
+      const res = await editTodo(editItem.id, data);
       if (res) {
-          dispatch(loadingPage());
-          hide();
+        dispatch(loadingSearchList([]));
+        dispatch(loadingPage());
+        hide();
       }
     } catch (error) {}
   };
@@ -86,7 +88,9 @@ const EditTodoModal = ({ editItem, isOpen, hide }: Todo) => {
                   id="name"
                   label="Edit Todo"
                   variant="outlined"
-                  onChange={(e) => {setname(e.target.value)}}
+                  onChange={(e) => {
+                    setname(e.target.value);
+                  }}
                   value={name}
                   // error={Boolean(formik.errors.name) && formik.touched.name}
                   // helperText={formik.touched.name && formik.errors.name}
@@ -99,7 +103,9 @@ const EditTodoModal = ({ editItem, isOpen, hide }: Todo) => {
                   id="status"
                   label="Description"
                   variant="outlined"
-                  onChange={(e) => {setstatus(e.target.value)}}
+                  onChange={(e) => {
+                    setstatus(e.target.value);
+                  }}
                   value={status}
                   // error={Boolean(formik.errors.status) && formik.touched.status}
                   // helperText={formik.touched.status && formik.errors.status}
@@ -107,7 +113,11 @@ const EditTodoModal = ({ editItem, isOpen, hide }: Todo) => {
               </div>
             </div>
             <div className="mx-4 my-2 w-1/5 flex flex-row gap-4">
-              <Button color="primary" variant="contained" onClick={handleSubmit}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={handleSubmit}
+              >
                 Submit
               </Button>
               <Button color="warning" variant="contained" type="reset">

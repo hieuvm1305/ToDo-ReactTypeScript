@@ -47,7 +47,7 @@ function TodoList() {
     }
     return () => {
     }
-  }, [listTodo, searchList])
+  }, [listTodo, searchList, isLoading])
   
   const handleDeleteTodo = async (id: string) => {
     if (window.confirm("Bạn có muốn xóa")) {

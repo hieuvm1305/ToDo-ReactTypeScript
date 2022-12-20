@@ -4,7 +4,7 @@ import client from "./client";
 export const getTodoList = () => {
   return client.get(`/todo`);
 };
-export const getTodoDetail = (id: number) => {
+export const getTodoDetail = (id: string) => {
   return client.get(`/todo/${id}`);
 };
 
@@ -21,6 +21,6 @@ export const deleteTodo = (id: string) => {
 
 // edit
 
-export const editTodo = (id: string, params : any) => {
+export const editTodo = (id: string, params : object) => {
   return client.put(`/todo/${id}`, params);
 };
